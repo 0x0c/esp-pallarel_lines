@@ -2,25 +2,28 @@
 
 namespace parallel_lines
 {
-	void scheduler::update() {
-		if (!this->functions.empty()) {
-			std::unique_lock<std::mutex> lock(this->mutex);
-			for (int i = 0; i < this->functions.size(); ++i) {
-				this->functions[i]();
-			}
-			this->functions.clear();
-			lock.unlock();
-			this->cond.notify_one();
+void scheduler::update()
+{
+	if (!this->functions.empty()) {
+		// xSemaphoreTake(this->mutex, portMAX_DELAY);
+		for (int i = 0; i < this->functions.size(); ++i) {
+			this->functions[i]();
 		}
+		this->functions.clear();
+		// xSemaphoreGive(this->mutex);
 	}
+}
 
-	void scheduler::push(std::function<void()> func) {
-		std::unique_lock<std::mutex> lock(this->mutex);
-		this->functions.push_back(func);
-	}
+void scheduler::push(std::function<void()> func)
+{
+	// xSemaphoreTake(this->mutex, portMAX_DELAY);
+	this->functions.push_back(func);
+	// xSemaphoreGive(this->mutex);
+}
 
-	parallel_lines::scheduler* scheduler::shared_scheduler() {
-		static parallel_lines::scheduler shared_instance;
-		return &shared_instance;
-	}
+parallel_lines::scheduler *scheduler::shared_scheduler()
+{
+	static scheduler shared_instance;
+	return &shared_instance;
+}
 }
