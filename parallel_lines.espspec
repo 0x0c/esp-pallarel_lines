@@ -1,9 +1,9 @@
 {
-	"name" : "thunderclap",
+	"name" : "parallel_lines",
 	"version" : "1.0.0",
-	"summary" : "Fuck'n simple notification system."
+	"summary" : "Fuck'n simple dispatcher."
 	"description" : "",
-	"homepage" : "https://github.com/0x0c/thunderclap",
+	"homepage" : "https://github.com/0x0c/esp-pallarel_lines",
 	"lisense" : "MIT",
 	"author" = {
 		"Akira MATSUDA" : "akira.matsuda@me.com"
